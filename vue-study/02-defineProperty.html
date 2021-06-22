@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app"></div>
+    <script>
+			const app = document.getElementById('app');
+			function defineReactive(obj, key, val) {
+				objServe(val);
+				Object.defineProperty(obj, key, {
+					get() {
+						console.log("get", val);
+						return val;
+					},
+					set(newVal) {
+						if (newVal !== val) {
+							console.log("set", newVal);
+							objServe(newVal);
+							val = newVal;
+						}
+						update();
+					},
+				});
+			}
+			function update() {
+				app.innerHTML = obj.baz.bar;
+			}
+			function objServe(obj) {
+				if (typeof obj !== 'object' || obj == null) {
+					return;
+				}
+				Object.keys(obj).forEach(key => defineReactive(obj, key, obj[key]));
+
+			}
+
+			function set(obj, key, val) {
+				defineReactive(obj, key, val);
+			}
+			const obj = {foo: 'foo', bar: 'bar', baz: {bar: 'bar2'}};
+			objServe(obj);
+			// obj.bar = 'sdsd'
+			// obj.foo = 'fooo';
+			// obj.baz.bar = '2323';
+
+
+			// obj.dong = 'dong';
+			set(obj, 'dong', 'dong');
+			obj.dong;
+
+			// const obj = {};
+			// defineReactive(obj, "foo", "bar");
+			// setInterval(() => {
+			// 	obj.foo = new Date();
+			// }, 1000);
+			// obj.foo;
+			// obj.foo = "foooo";
+    </script>
+</body>
+</html>

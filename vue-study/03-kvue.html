@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>kvueDom</title>
+</head>
+<body>
+	<div id="app">
+		<p @click="onClick">{{counter}}</p>
+		<p k-text="counter"></p>
+		<p k-html="desc"></p>
+		<p>{{arr}}</p>
+		<input k-model="desc"/>
+	</div>
+	<script src="kvue.js"></script>
+	<script>
+		const app = new KVue({
+			el: '#app',
+			data: {
+				counter: 1,
+				desc: '<span style="color: red">真棒</span>',
+				arr: [1,2,3,4]
+			},
+			methods: {
+				onClick() {
+					this.counter++;
+				}
+			}
+		});
+		app.arr.push(5)
+		// app.counter++;
+		// setInterval(() => {
+		// 	app.counter++;
+		// }, 1000);
+
+	</script>
+</body>
+</html>
